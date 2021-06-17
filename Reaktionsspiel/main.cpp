@@ -76,59 +76,79 @@ using namespace std;
 				{
 					Intdelay = 200;
 					gameisrunning = true;
+					lightsout();
 					Gamestart(Intdelay, ballamenderechts);
 					ballamenderechts = true;
-				}				
+				}
 			}
-			if (digitalRead(Taste2) == 1)
+			if (gameisrunning == true)
 			{
-				
-				delay(50);
+
 				if (ballamendelinks == true)
 				{
-					ballamendelinks = false;
-					PingpongL(Intdelay);
-					ballamenderechts = true;
-					if (Intdelay >= 100)
+
+					delay(50);
+					if (digitalRead(Taste2) == 1)
 					{
-						Intdelay = Intdelay - 20;
+						ballamendelinks = false;
+						PingpongL(Intdelay);
+						ballamenderechts = true;
+						if (Intdelay >= 100)
+						{
+							Intdelay = Intdelay - 20;
+						}
+						else
+						{
+
+						}
 					}
 					else
 					{
+						digitalWrite(ROT1, HIGH);
+						delay(200);
+						digitalWrite(ROT1, LOW);
+						delay(200);
+						digitalWrite(ROT1, HIGH);
+						delay(200);
+						digitalWrite(ROT1, LOW);
+						// game over links hat verloren 
+						Gameover();
+						gameisrunning = false;
 
 					}
 				}
-				else
-				{// game over links hat verloren 
-					Gameover();
-					gameisrunning = false;
-
-				}
-			}
-			if (digitalRead(Taste1) == 1)
-			{
-				
-				
-				delay(50);
 				if (ballamenderechts == true)
 				{
-					ballamenderechts = false;
-					PingpongR(Intdelay);					
-					ballamendelinks = true;
-					if (Intdelay >= 40)
+
+
+					delay(50);
+					if (digitalRead(Taste1) == 1)
 					{
-						Intdelay = Intdelay - 20;
+						ballamenderechts = false;
+						PingpongR(Intdelay);
+						ballamendelinks = true;
+						if (Intdelay >= 40)
+						{
+							Intdelay = Intdelay - 20;
+						}
+						else
+						{
+
+						}
 					}
 					else
 					{
-
+						digitalWrite(GRUEN2, HIGH);
+						delay(200);
+						digitalWrite(GRUEN2, LOW);
+						delay(200);
+						digitalWrite(GRUEN2, HIGH);
+						delay(200);
+						digitalWrite(GRUEN2, LOW);
+						//gameover rechts hat verloren
+						Gameover();
+						gameisrunning = false;
 					}
-				}
-				else
-				{
-					//gameover rechts hat verloren
-					Gameover();
-					gameisrunning = false;
 				}
 			}
 		}
@@ -235,6 +255,8 @@ void Gameover()
 	digitalWrite(GELB1, LOW);
 	digitalWrite(ROT1, HIGH);
 	digitalWrite(GRUEN2, HIGH);
+	digitalWrite(ROT2, HIGH);
+	digitalWrite(GRUEN1, HIGH);
 
 }
 void lightsout()
