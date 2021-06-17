@@ -20,8 +20,9 @@
 void Blink();
 void PingpongL(int);
 void PingpongR(int);
-void Gamestart();
+void Gamestart(int,bool);
 void Gameover();
+void lightsout();
 using namespace std;
 
 
@@ -73,20 +74,19 @@ using namespace std;
 			{
 				if (digitalRead(Taste2) == 1 && digitalRead(Taste1) == 1)
 				{
+					Intdelay = 200;
 					gameisrunning = true;
-					Gamestart();
+					Gamestart(Intdelay, ballamenderechts);
 					ballamenderechts = true;
 				}				
 			}
-			if (ballamendelinks==true)
+			if (digitalRead(Taste2) == 1)
 			{
-				digitalWrite(GRUEN2, HIGH);
-				delay(200);
-				digitalWrite(GRUEN2, LOW);
-				ballamendelinks = false;
+				
 				delay(50);
-				if (digitalRead(Taste2) == 1)
+				if (ballamendelinks == true)
 				{
+					ballamendelinks = false;
 					PingpongL(Intdelay);
 					ballamenderechts = true;
 					if (Intdelay >= 100)
@@ -105,18 +105,17 @@ using namespace std;
 
 				}
 			}
-			if (ballamenderechts==true)
+			if (digitalRead(Taste1) == 1)
 			{
-				digitalWrite(ROT1,HIGH );
-				delay(200);
-				digitalWrite(ROT1, LOW);
-				ballamenderechts = false;
+				
+				
 				delay(50);
-				if (digitalRead(Taste1) == 1)
+				if (ballamenderechts == true)
 				{
+					ballamenderechts = false;
 					PingpongR(Intdelay);					
 					ballamendelinks = true;
-					if (Intdelay >= 100)
+					if (Intdelay >= 40)
 					{
 						Intdelay = Intdelay - 20;
 					}
@@ -137,8 +136,9 @@ using namespace std;
 
 		return 0;
 	}
-void Gamestart();
+void Gamestart(int Intdelay, bool ballamenderechts)
 {
+	
 	PingpongL(Intdelay);
 	ballamenderechts = true;
 
@@ -236,6 +236,16 @@ void Gameover()
 	digitalWrite(ROT1, HIGH);
 	digitalWrite(GRUEN2, HIGH);
 
+}
+void lightsout()
+{
+	digitalWrite(ROT1, LOW);
+	digitalWrite(GELB1, LOW);
+	digitalWrite(GRUEN1, LOW);
+
+	digitalWrite(ROT2, LOW);
+	digitalWrite(GELB2, LOW);
+	digitalWrite(GRUEN2, LOW);
 }
 
 
